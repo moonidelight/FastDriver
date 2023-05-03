@@ -48,14 +48,3 @@ class OrderDetail(APIView):
         serializer = serializers.OrderSerializer(instance)
         return Response(serializer.data)
         # return Order.objects.filter(user=self.request.user)
-
-
-@method_decorator(csrf_exempt, name='dispatch')
-class Logout(APIView):
-    authentication_classes = (authentication.SessionAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
-
-    def post(self, request, format=None):
-        # simply delete the session data for this user
-        request.session.flush()
-        return Response(status=204)

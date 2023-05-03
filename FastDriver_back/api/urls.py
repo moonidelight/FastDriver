@@ -5,12 +5,11 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     path('login/', obtain_jwt_token),
-    path('logout/', views.Logout.as_view()),
+    path('logout/', views.logout),
 
     path('categories/', views.category_list),
     path('categories/<int:id>/cars/', views.category_detail),
 
-    # path('categories/<int:id>/cars/<int:id>/', views.car_detail),
     path('cars/', views.car_list),
 
     path('user/cars/', views.CarList.as_view()),

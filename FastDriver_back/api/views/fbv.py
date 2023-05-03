@@ -62,3 +62,8 @@ def category_detail(request, id):
         permission_classes = (IsAuthenticated,)
         category.delete()
         return Response({'deleted': True})
+
+
+@api_view(['POST'])
+def logout(request):
+    return Response({'logged out': True})
