@@ -26,7 +26,7 @@ class Car(models.Model):
     volume = models.FloatField()
     fuelType = models.CharField(max_length=100)
     rentingPrice = models.FloatField()
-    available = models.BooleanField(default=False)
+    available = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='cars', default=1, null=True)
 
@@ -38,3 +38,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.id}'
+
+
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    card_number = models.CharField(max_length=19)
+    activated_month = models.IntegerField(default=0)
+    activated_year = models.IntegerField(default=0)
+    cvv = models.IntegerField(default=0)

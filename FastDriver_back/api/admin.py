@@ -1,7 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from api.models import Car, Order, Category
+from api.models import Car, Order, Category, Payment
+
+
 
 
 @admin.register(Car)
@@ -16,4 +18,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user')
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
     list_display = ('id', 'user')

@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     # 'rest_framework_jwt',
-
+    # 'accounts',
     'api',
     'corsheaders',
 ]
@@ -97,6 +97,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+# AUTH_USER_MODEL = 'accounts.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

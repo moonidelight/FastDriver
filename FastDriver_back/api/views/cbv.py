@@ -1,11 +1,12 @@
 from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import status
+from rest_framework import status, authentication, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.exceptions import PermissionDenied
 
 from api import serializers
 from api.models import Order, Category
@@ -24,7 +25,7 @@ class OrderList(APIView):
 
     def get(self, request):
         serializer = serializers.OrderSerializer()
-        orders = Order.objects.filter(user=self.request.user)
+        orders = Order.objects.filter(user=request.user)
         serializer = serializers.OrderSerializer(orders, many=True)
         return Response(serializer.data)
 
@@ -35,7 +36,10 @@ class OrderDetail(APIView):
 
     def get_object(self, id):
         try:
-            return Order.objects.get(pk=id)
+            order = Order.objects.get(pk=id)
+            if order.user != self.request.user:
+                raise PermissionDenied
+            return order
         except Order.DoesNotExist as e:
             return Response(str(e), status=status.HTTP_404_BAD_REQUEST)
 
@@ -45,7 +49,13 @@ class OrderDetail(APIView):
         return Response(serializer.data)
         # return Order.objects.filter(user=self.request.user)
 
-    def delete(self, request, id):
-        instance = self.get_object(id)
-        instance.delete()
-        return Response({'deleted': True})
+
+@method_decorator(csrf_exempt, name='dispatch')
+class Logout(APIView):
+    authentication_classes = (authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None):
+        # simply delete the session data for this user
+        request.session.flush()
+        return Response(status=204)
