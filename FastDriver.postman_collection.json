@@ -28,7 +28,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user\",\r\n    \"password\": \"123\"\r\n}",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,7 +62,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cars\": [1]\r\n}",
+							"raw": "{\r\n    \"cars\": [1, 2]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -78,32 +78,6 @@
 								"api",
 								"user",
 								"order",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get cars that added user",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "JWT {{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{BASE_URL}}/api/user/cars/",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"api",
-								"user",
-								"cars",
 								""
 							]
 						}
@@ -253,6 +227,25 @@
 			"name": "car",
 			"item": [
 				{
+					"name": "get car list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/cars/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "add car",
 					"request": {
 						"method": "POST",
@@ -288,17 +281,24 @@
 					"response": []
 				},
 				{
-					"name": "get car list",
+					"name": "get cars that added user",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{BASE_URL}}/api/cars/",
+							"raw": "{{BASE_URL}}/api/user/cars/",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
+								"user",
 								"cars",
 								""
 							]
@@ -318,7 +318,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{BASE_URL}}/api/user/cars/1/",
+							"raw": "{{BASE_URL}}/api/user/cars/2/",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -326,7 +326,7 @@
 								"api",
 								"user",
 								"cars",
-								"1",
+								"2",
 								""
 							]
 						}
@@ -363,6 +363,33 @@
 								"user",
 								"cars",
 								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get car detail by user and id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/user/cars/2/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"cars",
+								"2",
 								""
 							]
 						}
